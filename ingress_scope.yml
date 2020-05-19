@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: scope
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    traefik.frontend.rule.type: PathPrefixStrip
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /scope
+        backend:
+          serviceName: weave-scope-app
+          servicePort: 80
+
+
