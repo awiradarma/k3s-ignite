@@ -1,0 +1,28 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: monkey
+  namespace: default
+spec:
+  template:
+    metadata:
+      name: monkey-version-2
+    spec:
+      containers:
+        - image: awiradarma/greeting:1.0
+          env:
+            - name: GREETING_MESSAGE
+              value: "Monkey v2"
+            - name: QUARKUS_HTTP_PORT
+              value: "7778"
+          ports:
+            - name: http1
+              containerPort: 7778
+  traffic:
+  - tag: current
+    revisionName: monkey-version-1
+    percent: 100
+  - tag: latest
+    latestRevision: true
+    percent: 0
+
